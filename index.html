@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>CRUD</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Datos</th>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="DataName" placeholder="DataName">
+            <input type="text" id="Data" placeholder="Data">
+            <div id="dataAttributes"></div>
+            <button id="addAttribute"onclick="dataAttribute()" >Add attribute</button>
+            <button type="submit" onclick="addCellphone()">Add Cellphone</button>
+        </tfoot>
+    </table>
+    <div >
+        <table>
+            <tbody id="update">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
