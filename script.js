@@ -42,16 +42,16 @@ getApi()
                 cellData.innerHTML = 'No hay datos'
             }
 
-            let cellUpgradeButton =  newRow.insertCell()
-            cellUpgradeButton.innerHTML = `<button onclick='Update("${element.id}", this)'>Update</button>` 
+            let cellupdateButton =  newRow.insertCell()
+            cellupdateButton.innerHTML = `<button onclick='Update("${element.id}", this)'>Update</button>` 
             let cellDeleteButton = newRow.insertCell()
-            cellDeleteButton.innerHTML = `<button onclick='deleteCellphone("${element.id}", this)'>Delete</button>`;
+            cellDeleteButton.innerHTML = `<button onclick='deleteCell("${element.id}", this)'>Delete</button>`;
 
             
         });       
     })
 
-    function deleteCellphone(id, buttonElement) {
+    function deleteCell(id, buttonElement) {
 
         fetch(`${url}/${id}`, {
             method: 'DELETE'
@@ -72,7 +72,7 @@ getApi()
     }
 
 
-    function dataAttribute() {
+    function dataMake() {
         
         if(document.getElementById('DataName').value !== ''){
             const dataName = document.getElementById('DataName').value;
@@ -81,7 +81,7 @@ getApi()
             data[dataName] = datahtml;
 
             const attributeHTML = `<p>${dataName}: ${datahtml}</p>`;
-            document.getElementById('dataAttributes').innerHTML += attributeHTML;
+            document.getElementById('dataMakes').innerHTML += attributeHTML;
 
             document.getElementById('DataName').value = "";
             document.getElementById('Data').value = "";
@@ -114,7 +114,7 @@ getApi()
 
             xhr.send(cellphone)
             data = {}
-            document.getElementById('dataAttributes').innerHTML = ""
+            document.getElementById('dataMakes').innerHTML = ""
         })
     }
 
@@ -122,7 +122,7 @@ getApi()
 
         if (document.getElementById('name').value !== ''){
 
-            let data = dataAttribute()
+            let data = dataMake()
             let cellphone = JSON.stringify({
                 'name': document.getElementById('name').value,
                 'data': data,
@@ -145,12 +145,12 @@ getApi()
                     let cellData = newRow.insertCell()
                     cellData.innerHTML = 'No hay datos'
                 }
-                let cellUpgradeButton =  newRow.insertCell()
+                let cellupdateButton =  newRow.insertCell()
                 let cellDeleteButton = newRow.insertCell()
                 
                 console.log(data)
-                cellUpgradeButton.innerHTML = `<button onclick='Update("${response.id}", this)'>Update</button>` 
-                cellDeleteButton.innerHTML = `<button onclick = 'deleteCellphone("${response.id}", this)'>Delete</button>`
+                cellupdateButton.innerHTML = `<button onclick='Update("${response.id}", this)'>Update</button>` 
+                cellDeleteButton.innerHTML = `<button onclick = 'deleteCell("${response.id}", this)'>Delete</button>`
             })
         }
         else {
@@ -159,7 +159,7 @@ getApi()
         
     }
     
-    function newDataAtribute(){
+    function newDataMake(){
         if(document.getElementById('newDataName').value !== '' & document.getElementById('newData').value !== ''){
         const dataName = document.getElementById('newDataName').value;
         const datahtml = document.getElementById('newData').value;
@@ -167,7 +167,7 @@ getApi()
         data[dataName] = datahtml;
     
         const attributeHTML = `<p>${dataName}: ${datahtml}</p>`;
-        document.getElementById('newdataAttributes').innerHTML += attributeHTML
+        document.getElementById('newdataMakes').innerHTML += attributeHTML
     
         document.getElementById('newDataName').value = ""
         document.getElementById('newData').value = ""
@@ -198,7 +198,7 @@ getApi()
                     reject(Error(xhr.status + " || " + xhr.statusText))
                 }
             }
-            document.getElementById('dataAttributes').innerHTML = ""
+            document.getElementById('dataMakes').innerHTML = ""
             console.log(cellphone)
             document.getElementById("update").value = ""
             xhr.send(cellphone)
@@ -208,7 +208,7 @@ getApi()
     
     }
 
-    function deleteCellphone(id, buttonDelete) {
+    function deleteCell(id, buttonDelete) {
         var xhr = new XMLHttpRequest();
         xhr.open('DELETE', `${url}/${id}`);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -216,38 +216,38 @@ getApi()
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 300) {
                 console.log(`Delete Cellphone`);
-                deleteCellphoneHTML(buttonDelete)
+                deleteCellHTML(buttonDelete)
             } else {
                 console.error(`Error: ${xhr.status} ${xhr.statusText} ${id}`);
             }
         };
         xhr.send(id);
     }
-    function deleteCellphoneHTML(buttonDelete) {
+    function deleteCellHTML(buttonDelete) {
         buttonDelete.parentNode.parentNode.remove()
     }
-    function upgradeCellphone(id, buttonUpgrade) {
+    function updateCell(id, buttonupdate) {
         let data = newDataAtribute()
         let newname =  document.getElementById('newName').value
         let cellphone = JSON.stringify({
-            'id': id,
+            'id': idAdd,
             'name': document.getElementById('newName').value,
             'data': data,
         })
         document.getElementById("update").innerHTML = ""
         putCellphone(cellphone, id).then(response => {
-            deleteCellphoneHTML(buttonUpgrade)
+            deleteCellHTML(buttonupdate)
             console.log(response.id)
             let tbody = document.getElementsByTagName('tbody')[0]
             let newRow = tbody.insertRow()
             let cellID = newRow.insertCell()
-            cellID.innerHTML = response.id
+            cellID.innerHTML = idAdd
             let cellName = newRow.insertCell()
-            let cellUpgradeButton = newRow.insertCell()
+            let cellupdateButton = newRow.insertCell()
             let cellDeleteButton = newRow.insertCell()
             cellName.innerHTML = newname
-            cellDeleteButton.innerHTML = `<button onclick = 'deleteCellphone("${response.id}", this)'>Delete</button>`
-            cellUpgradeButton.innerHTML = `<button onclick='openDivUpgrade("${response.id}", this)'>Upgrade</button>` 
+            cellDeleteButton.innerHTML = `<button onclick = 'deleteCell("${response.id}", this)'>Delete</button>`
+            cellupdateButton.innerHTML = `<button onclick='openDivupdate("${response.id}", this)'>update</button>` 
             console.log(data)
             if (data !== null) {
                 for (let key in data) {
@@ -261,9 +261,9 @@ getApi()
     
         })}
 
-    function Update(id, buttonUpgrade){
+    function Update(id, buttonUpadte){
         let divUp = document.getElementById("update");
-        console.log(buttonUpgrade);
+        console.log(buttonUpadte);
 
         let h5 =  document.createElement("h5");
         h5.innerText = "Modificar Datos"
@@ -286,9 +286,9 @@ getApi()
         newDataInput.placeholder = "Data";
         divUp.appendChild(newDataInput);
 
-        let newdataAttributesDiv = document.createElement("div");
-        newdataAttributesDiv.id = "newdataAttributes";
-        divUp.appendChild(newdataAttributesDiv);
+        let newdataMakesDiv = document.createElement("div");
+        newdataMakesDiv.id = "newdataMakes";
+        divUp.appendChild(newdataMakesDiv);
 
         let addAttributeBtn = document.createElement("button");
         addAttributeBtn.id = "NewaddAttribute";
@@ -296,11 +296,11 @@ getApi()
         addAttributeBtn.innerHTML = "Agregar atributo";
         divUp.appendChild(addAttributeBtn);
 
-        let upgradeBtn = document.createElement("button");
-        upgradeBtn.type = "submit";
-        upgradeBtn.onclick = function() {
-            upgradeCellphone(id, buttonUpgrade);
+        let UpadteBtn = document.createElement("button");
+        UpadteBtn.type = "submit";
+        UpadteBtn.onclick = function() {
+            upadteCellphone(id, buttonUpadte);
         };
-        upgradeBtn.innerHTML = "Upgrade Cellphone";
-        divUp.appendChild(upgradeBtn);
+        UpadteBtn.innerHTML = "Upadte Cellphone";
+        divUp.appendChild(UpadteBtn);
     }
